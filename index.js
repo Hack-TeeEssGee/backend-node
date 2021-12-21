@@ -7,18 +7,14 @@ const { connectDB, closeDB } = require("./utils/connection");
 
 const app = express();
 app.use(cors());
-
 dotenv.config();
-
 app.use(morgan("tiny"));
+
+const testRoute = require("./routes/test");
 
 const port = process.env.PORT || 8000;
 
-app.get("/", (req, res) => {
-  connectDB();
-  closeDB();
-  res.send("KGPverse api service working.").status(200);
-});
+app.use("/", testRoute);
 
 app.listen(port, () => {
   Logger.info(`App started. Listening on port ${port}`);
