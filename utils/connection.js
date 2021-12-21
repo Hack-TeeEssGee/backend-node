@@ -1,3 +1,21 @@
-const { Sequelize } = require('sequelize');
+const { Sequelize } = require("sequelize");
+const dotenv = require("dotenv");
+dotenv.config();
 
-const sequelize = new Sequelize('postgres://user:pass@example.com:5432/dbname')
+const connectDB = async () => {
+  const sequelize = new Sequelize(process.env.DATABASE_STRING);
+  try {
+    await sequelize.authenticate();
+    console.log("Connection has been established successfully.");
+  } catch (error) {
+    console.error("Unable to connect to the database:", error);
+  }
+};
+
+const closeDB = () => {
+  const sequelize = new Sequelize(process.env.DATABASE_STRING);
+  sequelize.close();
+};
+
+exports.connectDB = connectDB;
+exports.closeDB = closeDB;
