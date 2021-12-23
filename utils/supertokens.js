@@ -21,6 +21,7 @@ const initSupertokens = () => {
             Session.init()
         ]
     });
+    Logger.info('Supertokens connected.');
 }
 
 exports.initSupertokens = initSupertokens;
