@@ -2,7 +2,9 @@ const { Sequelize } = require("sequelize");
 const dotenv = require("dotenv");
 dotenv.config();
 
-const sequelize = new Sequelize(process.env.DATABASE_STRING);
+const sequelize = new Sequelize(process.env.DATABASE_STRING, {
+  logging: false,
+});
 
 const connectDB = async () => {
   try {
