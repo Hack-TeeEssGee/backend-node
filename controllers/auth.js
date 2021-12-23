@@ -1,3 +1,5 @@
+let Session = require("supertokens-node/recipe/session");
+
 exports.test = (req, res) => {
   res.send("Authentication zone reached");
 };

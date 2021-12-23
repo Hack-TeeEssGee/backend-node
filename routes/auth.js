@@ -1,5 +1,4 @@
 const router = require("express").Router();
-let Session = require("supertokens-node/recipe/session");
 const {
   test,
   sendOTP,
