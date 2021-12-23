@@ -42,7 +42,6 @@ app.use(middleware());
 
 //Routes
 app.use("/", testRoute);
-
 app.use("/authenticate", authRoute);
 
 //supertokens error handler
