@@ -4,17 +4,31 @@ const dotenv = require("dotenv");
 const morgan = require("morgan");
 const Logger = require("./utils/logger");
 const { connectDB, closeDB, sequelize } = require("./utils/connection");
-
-const app = express();
-app.use(cors());
-dotenv.config();
-app.use(morgan("tiny"));
-
 const testRoute = require("./routes/test");
 const Student = require("./models/Student");
 const  Event= require("./models/Event");
+const { initSupertokens } = require("./utils/supertokens");
+let supertokens = require("supertokens-node");
+let { middleware, errorHandler } = require("supertokens-node/framework/express");
+
+const app = express();
+dotenv.config();
+app.use(morgan("tiny"));
+
+//initialise supertokens connection
+initSupertokens();
+
+app.use(cors({
+  origin: process.env.FRONTEND_URL,
+  allowedHeaders: ["content-type", ...supertokens.getAllCORSHeaders()],
+  credentials: true,
+}));
+app.use(middleware());
 
 app.use("/", testRoute);
+
+//supertokens error handler
+app.use(errorHandler());
 
 const port = process.env.PORT || 8000;
 sequelize
