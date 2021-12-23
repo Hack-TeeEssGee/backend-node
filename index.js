@@ -3,13 +3,24 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 const morgan = require("morgan");
 const Logger = require("./utils/logger");
-const { connectDB, closeDB, sequelize } = require("./utils/connection");
+
+//DB connection
+const { sequelize } = require("./utils/connection");
+
+//Routes Import
 const testRoute = require("./routes/test");
+
+//Models Imports
 const Student = require("./models/Student");
-const  Event= require("./models/Event");
+const Event = require("./models/Event");
+
+// SuperToken configuration
 const { initSupertokens } = require("./utils/supertokens");
 let supertokens = require("supertokens-node");
-let { middleware, errorHandler } = require("supertokens-node/framework/express");
+let {
+  middleware,
+  errorHandler,
+} = require("supertokens-node/framework/express");
 
 const app = express();
 dotenv.config();
@@ -18,11 +29,13 @@ app.use(morgan("tiny"));
 //initialise supertokens connection
 initSupertokens();
 
-app.use(cors({
-  origin: process.env.FRONTEND_URL,
-  allowedHeaders: ["content-type", ...supertokens.getAllCORSHeaders()],
-  credentials: true,
-}));
+app.use(
+  cors({
+    origin: "*",
+    allowedHeaders: ["content-type", ...supertokens.getAllCORSHeaders()],
+    credentials: true,
+  })
+);
 app.use(middleware());
 
 app.use("/", testRoute);
