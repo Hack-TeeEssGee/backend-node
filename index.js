@@ -11,6 +11,7 @@ const { sequelize } = require("./utils/connection");
 const testRoute = require("./routes/test");
 
 //Models Imports
+const authRoute = require("./routes/auth");
 const Student = require("./models/Student");
 const Event = require("./models/Event");
 
@@ -32,7 +33,7 @@ initSupertokens();
 //cors configuration
 app.use(
   cors({
-    origin: "*",
+    origin: process.env.FRONTEND_URL,
     allowedHeaders: ["content-type", ...supertokens.getAllCORSHeaders()],
     credentials: true,
   })
@@ -41,6 +42,8 @@ app.use(middleware());
 
 //Routes
 app.use("/", testRoute);
+
+app.use("/authenticate", authRoute);
 
 //supertokens error handler
 app.use(errorHandler());
