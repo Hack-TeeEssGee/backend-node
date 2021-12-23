@@ -3,6 +3,7 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 const morgan = require("morgan");
 const Logger = require("./utils/logger");
+const bodyParser = require("body-parser");
 
 //DB connection
 const { sequelize } = require("./utils/connection");
@@ -23,9 +24,12 @@ let {
   errorHandler,
 } = require("supertokens-node/framework/express");
 
+//Middleware configuration
 const app = express();
 dotenv.config();
 app.use(morgan("tiny"));
+app.use(bodyParser.json())
+
 
 //initialise supertokens connection
 initSupertokens();
@@ -46,7 +50,6 @@ app.use("/authenticate", authRoute);
 
 //supertokens error handler
 app.use(errorHandler());
-
 
 //Starting App
 const port = process.env.PORT || 8000;
