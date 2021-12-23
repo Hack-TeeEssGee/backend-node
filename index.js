@@ -32,7 +32,7 @@ initSupertokens();
 
 app.use(
   cors({
-    origin: "*",
+    origin: process.env.FRONTEND_URL,
     allowedHeaders: ["content-type", ...supertokens.getAllCORSHeaders()],
     credentials: true,
   })
