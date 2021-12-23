@@ -4,11 +4,12 @@ exports.test = (req, res) => {
   res.send("Authentication zone reached");
 };
 
+// @route POST /authenticate/otp
+// @desc send OTP to email
 exports.sendOTP = (req, res) => {
-  // verify email
-  // send OTP to email
-
-  res.send("OTP sent");
+  const { email } = req.body;
+  
+  res.send(email);
 };
 
 exports.loginStudent = async (req, res) => {
