@@ -11,6 +11,7 @@ const { sequelize } = require("./utils/connection");
 const testRoute = require("./routes/test");
 
 //Models Imports
+const authRoute = require("./routes/auth");
 const Student = require("./models/Student");
 const Event = require("./models/Event");
 
@@ -39,6 +40,8 @@ app.use(
 app.use(middleware());
 
 app.use("/", testRoute);
+
+app.use("/authenticate", authRoute);
 
 //supertokens error handler
 app.use(errorHandler());
