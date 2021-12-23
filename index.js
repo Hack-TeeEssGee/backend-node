@@ -29,6 +29,7 @@ app.use(morgan("tiny"));
 //initialise supertokens connection
 initSupertokens();
 
+//cors configuration
 app.use(
   cors({
     origin: "*",
@@ -38,11 +39,14 @@ app.use(
 );
 app.use(middleware());
 
+//Routes
 app.use("/", testRoute);
 
 //supertokens error handler
 app.use(errorHandler());
 
+
+//Starting App
 const port = process.env.PORT || 8000;
 sequelize
   .sync()
