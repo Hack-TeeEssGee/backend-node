@@ -23,8 +23,9 @@ exports.sendOTP = async (req, res) => {
     }
 
     const otp = otpGenerator.generate(6, {
-      alphabets: false,
-      upperCase: false,
+      digits: true,
+      lowerCaseAlphabets: false,
+      upperCaseAlphabets: false,
       specialChars: false,
     });
     const now = new Date();
@@ -78,8 +79,6 @@ exports.sendOTP = async (req, res) => {
     const response = { Status: "Failure", Details: err.message };
     return res.status(400).send(response);
   }
-
-  res.send(email);
 };
 
 exports.loginStudent = async (req, res) => {
