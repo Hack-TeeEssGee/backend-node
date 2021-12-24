@@ -3,9 +3,8 @@ exports.Event_Model = function (sequelize, DataTypes) {
     "event",
     {
       id: {
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
-        allowNull: false,
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
       },
       type: DataTypes.STRING,
