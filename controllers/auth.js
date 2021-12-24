@@ -81,9 +81,10 @@ exports.sendOTP = async (req, res) => {
   }
 };
 
+
+//@route /authenticate/student/login
+//@desc  Validates OTP
 exports.loginStudent = async (req, res) => {
-  // verify user's email...
-  // verify OTP and expiry.
 
   try {
     var currentdate = new Date();
