@@ -1,29 +1,51 @@
+const dotenv = require("dotenv");
+dotenv.config();
 const express = require("express");
 const cors = require("cors");
-const dotenv = require("dotenv");
+
 const morgan = require("morgan");
 const Logger = require("./utils/logger");
-const { connectDB, closeDB, sequelize } = require("./utils/connection");
+const bodyParser = require("body-parser");
 
-const app = express();
-app.use(cors());
-dotenv.config();
-app.use(morgan("tiny"));
-
+//Routes Import
 const testRoute = require("./routes/test");
-const Student = require("./models/Student");
-const  Event= require("./models/Event");
+const authRoute = require("./routes/auth");
 
+// SuperToken configuration
+const { initSupertokens } = require("./utils/supertokens");
+let supertokens = require("supertokens-node");
+let {
+  middleware,
+  errorHandler,
+} = require("supertokens-node/framework/express");
+
+//Middleware configuration
+const app = express();
+app.use(morgan("tiny"));
+app.use(bodyParser.json());
+
+//initialise supertokens connection
+initSupertokens();
+
+//cors configuration
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL,
+    allowedHeaders: ["content-type", ...supertokens.getAllCORSHeaders()],
+    credentials: true,
+  })
+);
+app.use(middleware());
+
+//Routes
 app.use("/", testRoute);
+app.use("/authenticate", authRoute);
 
+//supertokens error handler
+app.use(errorHandler());
+
+//Starting App
 const port = process.env.PORT || 8000;
-sequelize
-  .sync()
-  .then(
-    app.listen(port, () => {
-      Logger.info(`App started. Listening on port ${port}`);
-    })
-  )
-  .catch((err) => {
-    console.log(err);
-  });
+app.listen(port, () => {
+  Logger.info(`App started. Listening on port ${port}`);
+});

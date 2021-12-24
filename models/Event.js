@@ -1,22 +1,17 @@
-const Sequelize = require("sequelize");
-
-const { sequelize } = require("../utils/connection");
-
-const Event = sequelize.define(
-  "event",
-  {
-    id: {
-      type: Sequelize.INTEGER,
-      autoIncrement: true,
-      allowNull: false,
-      primaryKey: true,
+exports.Event_Model = function (sequelize, DataTypes) {
+  return sequelize.define(
+    "event",
+    {
+      id: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        primaryKey: true,
+      },
+      type: DataTypes.STRING,
     },
-    type: Sequelize.STRING,
-  },
-  {
-    freezeTableName: true,
-    timestamps: false,
-  }
-);
-
-module.exports = Event;
+    {
+      freezeTableName: true,
+      timestamps: false,
+    }
+  );
+};
