@@ -1,26 +1,19 @@
 const { Sequelize } = require("sequelize");
-const dotenv = require("dotenv");
+
 const Logger = require("../utils/logger");
-dotenv.config();
+
+//Models Imports
+// const Student = require("./models/Student");
+const { Event_Model } = require("../models/Event");
 
 const sequelize = new Sequelize(process.env.DATABASE_STRING, {
   logging: false,
 });
 
-const connectDB = async () => {
-  try {
-    await sequelize.authenticate();
-    Logger.info("Connection has been established successfully.");
-  } catch (error) {
-    Logger.error("Unable to connect to the database:", error);
-  }
-};
+const Event = Event_Model(sequelize, Sequelize);
 
-const closeDB = () => {
-  const sequelize = new Sequelize(process.env.DATABASE_STRING);
-  sequelize.close();
-};
+sequelize.sync().then(() => {
+  Logger.info("db and tables have been created");
+});
 
-exports.sequelize = sequelize;
-exports.connectDB = connectDB;
-exports.closeDB = closeDB;
+module.exports = { Event };
