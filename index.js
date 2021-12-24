@@ -1,20 +1,15 @@
+const dotenv = require("dotenv");
+dotenv.config();
 const express = require("express");
 const cors = require("cors");
-const dotenv = require("dotenv");
+
 const morgan = require("morgan");
 const Logger = require("./utils/logger");
 const bodyParser = require("body-parser");
 
-//DB connection
-const { sequelize } = require("./utils/connection");
-
 //Routes Import
 const testRoute = require("./routes/test");
-
-//Models Imports
 const authRoute = require("./routes/auth");
-const Student = require("./models/Student");
-const Event = require("./models/Event");
 
 // SuperToken configuration
 const { initSupertokens } = require("./utils/supertokens");
@@ -26,10 +21,8 @@ let {
 
 //Middleware configuration
 const app = express();
-dotenv.config();
 app.use(morgan("tiny"));
-app.use(bodyParser.json())
-
+app.use(bodyParser.json());
 
 //initialise supertokens connection
 initSupertokens();
@@ -53,13 +46,6 @@ app.use(errorHandler());
 
 //Starting App
 const port = process.env.PORT || 8000;
-sequelize
-  .sync()
-  .then(
-    app.listen(port, () => {
-      Logger.info(`App started. Listening on port ${port}`);
-    })
-  )
-  .catch((err) => {
-    console.log(err);
-  });
+app.listen(port, () => {
+  Logger.info(`App started. Listening on port ${port}`);
+});
