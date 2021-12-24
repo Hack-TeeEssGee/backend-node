@@ -10,7 +10,7 @@ router.get("/", test);
 
 router.post("/otp", sendOTP);
 
-router.post("/student-login", loginStudent);
+router.post("/student/login", loginStudent);
 
 router.post("/official-login", loginOffical);
 
