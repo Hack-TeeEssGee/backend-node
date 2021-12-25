@@ -1,6 +1,6 @@
 let Session = require("supertokens-node/recipe/session");
 var otpGenerator = require("otp-generator");
-const { AddMinutes, dates } = require("../utils/utility");
+const { AddMinutes, dates, isPresent } = require("../utils/utility");
 const { OTP, Official } = require("../utils/connection");
 const { encode, decode } = require("../utils/crypt");
 const { message, subject_mail } = require("../template/email");
@@ -209,10 +209,12 @@ exports.registerOfficial = async (req, res) => {
       return res.status(400).send(response);
     }
 
-    let user_instance = await Official.findOne({ where: { email } });
+    let user_instance = await Official.findAll({ where: { email: email } });
+    console.log(user_instance);
+    if (user_instance !== null) {
+      const is_present = isPresent(user_instance, role);
 
-    if (user_instance != null) {
-      if (user_instance.role !== role) {
+      if (!is_present) {
         const encoded_password = await encode(password);
 
         const details = {
