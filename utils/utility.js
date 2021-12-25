@@ -53,3 +53,13 @@ var dates = {
 };
 
 exports.dates = dates;
+
+exports.isPresent = (user_instance, role) => {
+  let is_present = false;
+  user_instance.forEach((e) => {
+    if (e.role === role) {
+      is_present = true;
+    }
+  });
+  return is_present;
+};
