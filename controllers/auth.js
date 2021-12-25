@@ -179,46 +179,68 @@ exports.loginStudent = async (req, res) => {
 // @route /authenticate/official/register
 // @desc Register for a official
 exports.registerOfficial = async (req, res) => {
-  const { name, email, password, role } = req.body;
+  try {
+    const { name, email, password, role } = req.body;
 
-  if (!name) {
-    const response = {
-      Status: "Failure",
-      Details: "Name not provided",
-    };
-    return res.status(400).send(response);
-  }
-  if (!email) {
-    const response = {
-      Status: "Failure",
-      Details: "Email not provided",
-    };
-    return res.status(400).send(response);
-  }
-  if (!password) {
-    const response = { Status: "Failure", Details: "Password not Provided" };
-    return res.status(400).send(response);
-  }
-  if (!role) {
-    const response = {
-      Status: "Failure",
-      Details: "Role of User not Provided",
-    };
-    return res.status(400).send(response);
-  }
+    if (!name) {
+      const response = {
+        Status: "Failure",
+        Details: "Name not provided",
+      };
+      return res.status(400).send(response);
+    }
+    if (!email) {
+      const response = {
+        Status: "Failure",
+        Details: "Email not provided",
+      };
+      return res.status(400).send(response);
+    }
+    if (!password) {
+      const response = { Status: "Failure", Details: "Password not Provided" };
+      return res.status(400).send(response);
+    }
+    //TODO: check for roles through array
+    if (!role) {
+      const response = {
+        Status: "Failure",
+        Details: "Role of User not Provided",
+      };
+      return res.status(400).send(response);
+    }
 
-  let user_instance = await Official.findOne();
-  console.log(user_instance);
-  console.log(user_instance === "undefined");
-  if (user_instance === "undefined") {
-    const response = {
-      Status: "Failure",
-      Details: "User Already Exists,Please Login",
-    };
-    return res.status(400).send(response);
-  } else {
-    if (user_instance.role !== role) {
-      const encoded_password = encode(password);
+    let user_instance = await Official.findOne({ where: { email } });
+
+    if (user_instance != null) {
+      if (user_instance.role !== role) {
+        const encoded_password = await encode(password);
+
+        const details = {
+          name,
+          email,
+          password: encoded_password,
+          status: false,
+          role,
+        };
+        console.log(encoded_password);
+        user_instance = await Official.create(details);
+
+        await Session.createNewSession(res, email, { role });
+
+        const response = {
+          Status: "Success",
+          Details: "User Created and logged in",
+        };
+        return res.status(200).send(response);
+      } else {
+        const response = {
+          Status: "Failure",
+          Details: "User Already Exists,Please Login",
+        };
+        return res.status(400).send(response);
+      }
+    } else {
+      const encoded_password = await encode(password);
 
       const details = {
         name,
@@ -227,6 +249,7 @@ exports.registerOfficial = async (req, res) => {
         status: false,
         role,
       };
+      console.log(encoded_password);
       user_instance = await Official.create(details);
 
       await Session.createNewSession(res, email, { role });
@@ -236,13 +259,10 @@ exports.registerOfficial = async (req, res) => {
         Details: "User Created and logged in",
       };
       return res.status(200).send(response);
-    } else {
-      const response = {
-        Status: "Failure",
-        Details: "User with same role already Exists,Please Login",
-      };
-      return res.status(400).send(response);
     }
+  } catch (err) {
+    const response = { Status: "Failure", Details: err.message };
+    return res.status(400).send(response);
   }
 };
 
