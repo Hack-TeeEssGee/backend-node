@@ -1,22 +1,19 @@
-const Sequelize = require("sequelize");
-
-const { sequelize } = require("../utils/connection");
-
-const Student = sequelize.define(
-  "student",
-  {
-    id: {
-      type: Sequelize.INTEGER,
-      autoIncrement: true,
-      allowNull: false,
-      primaryKey: true,
+exports.Student_Model = function (sequelize, DataTypes) {
+  return sequelize.define(
+    "Student",
+    {
+      id: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        primaryKey: true,
+      },
+      name: DataTypes.STRING,
+      roll_no: DataTypes.STRING,
+      email: DataTypes.STRING,
     },
-    quantity: Sequelize.INTEGER,
-  },
-  {
-    freezeTableName: true,
-    timestamps: false,
-  }
-);
-
-module.exports = Student;
+    {
+      tableName: "student",
+      timestamps: false,
+    }
+  );
+};

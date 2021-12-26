@@ -1,7 +1,7 @@
 let Session = require("supertokens-node/recipe/session");
 var otpGenerator = require("otp-generator");
 const { AddMinutes, dates, isPresent } = require("../utils/utility");
-const { OTP, Official } = require("../utils/connection");
+const { OTP, Official, Student } = require("../utils/connection");
 const { encode, decode } = require("../utils/crypt");
 const { message, subject_mail } = require("../template/email");
 const nodemailer = require("nodemailer");
@@ -139,9 +139,17 @@ exports.loginStudent = async (req, res) => {
             otp_instance.verified = true;
             otp_instance.save();
 
+            const student_instance = await Student.findOne({
+              where: { email: check },
+            });
+
             const response = {
               Status: "Success",
               Details: "OTP Matched",
+              Check: check,
+              name: student_instance.name,
+              email: student_instance.email,
+              roll_no: student_instance.roll_no,
             };
 
             let userId = check; // get from db
