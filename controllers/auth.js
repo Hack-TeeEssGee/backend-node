@@ -268,19 +268,81 @@ exports.registerOfficial = async (req, res) => {
   }
 };
 
+//@route /authenticate/official/login
+//@desc Login an official
+
 exports.loginOffical = async (req, res) => {
-  // verify user's email password and role assigned...
-  // verify OTP and expiry.
+  try {
+    const { email, password, role } = req.body;
 
-  let userId = "chiragghosh@kgpian.iitkgp.ac.in"; // get from db
-  let role = "admin";
+    if (!email) {
+      const response = {
+        Status: "Failure",
+        Details: "Email not provided",
+      };
+      return res.status(400).send(response);
+    }
+    if (!password) {
+      const response = { Status: "Failure", Details: "Password not Provided" };
+      return res.status(400).send(response);
+    }
+    //TODO: check for roles through array
+    if (!role) {
+      const response = {
+        Status: "Failure",
+        Details: "Role of User not Provided",
+      };
+      return res.status(400).send(response);
+    }
 
-  await Session.createNewSession(res, userId, { role });
+    let user_instance = await Official.findOne({
+      where: { email: email, role: role },
+    });
 
-  /* a new session has been created.
-   * - an access & refresh token has been attached to the response's cookie
-   * - a new row has been inserted into the database for this new session
-   */
+    if (user_instance !== null) {
+      if (user_instance.status) {
+        try {
+          var decoded_password = await decode(user_instance.password);
+        } catch (err) {
+          const response = { Status: "Failure", Details: "Bad Request" };
+          return res.status(400).send(response);
+        }
 
-  res.json({ message: "Official logged in!" });
+        if (password === decoded_password) {
+          const response = {
+            Status: "Success",
+            Details: "Logged In",
+            name: user_instance.name,
+            email: user_instance.email,
+            role: user_instance.role,
+          };
+
+          await Session.createNewSession(res, email, { role });
+
+          res.status(200).send(response);
+        } else {
+          const response = {
+            Status: "Failure",
+            Details: "Incorrect Password, Please try again",
+          };
+          return res.status(400).send(response);
+        }
+      } else {
+        const response = {
+          Status: "Failure",
+          Details: "Registration not yet confirmed, Please try after some time",
+        };
+        return res.status(400).send(response);
+      }
+    } else {
+      const response = {
+        Status: "Failure",
+        Details: "User does not exist, Register First",
+      };
+      return res.status(400).send(response);
+    }
+  } catch (err) {
+    const response = { Status: "Failure", Details: err.message };
+    return res.status(400).send(response);
+  }
 };
