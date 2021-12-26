@@ -15,6 +15,6 @@ router.post("/student/login", loginStudent);
 
 router.post("/official/register", registerOfficial);
 
-router.post("/official-login", loginOffical);
+router.post("/official/login", loginOffical);
 
 module.exports = router;
