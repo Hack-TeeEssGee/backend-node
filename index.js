@@ -10,6 +10,7 @@ const bodyParser = require("body-parser");
 //Routes Import
 const testRoute = require("./routes/test");
 const authRoute = require("./routes/auth");
+const certificateRoute = require("./routes/certificate");
 
 // SuperToken configuration
 const { initSupertokens } = require("./utils/supertokens");
@@ -40,6 +41,7 @@ app.use(middleware());
 //Routes
 app.use("/", testRoute);
 app.use("/authenticate", authRoute);
+app.use("/certificate", certificateRoute);
 
 //supertokens error handler
 app.use(errorHandler());
