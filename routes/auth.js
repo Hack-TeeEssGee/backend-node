@@ -1,11 +1,5 @@
 const router = require("express").Router();
-const {
-  test,
-  sendOTP,
-  loginStudent,
-  loginOffical,
-  registerOfficial,
-} = require("../controllers/auth");
+const {test, sendOTP, loginStudent, loginOffical, registerOfficial} = require("../controllers/auth");
 
 router.get("/", test);
 

@@ -13,12 +13,9 @@ const authRoute = require("./routes/auth");
 const certificateRoute = require("./routes/certificate");
 
 // SuperToken configuration
-const { initSupertokens } = require("./utils/supertokens");
+const {initSupertokens} = require("./utils/supertokens");
 let supertokens = require("supertokens-node");
-let {
-  middleware,
-  errorHandler,
-} = require("supertokens-node/framework/express");
+let {middleware, errorHandler} = require("supertokens-node/framework/express");
 
 //Middleware configuration
 const app = express();
@@ -30,11 +27,11 @@ initSupertokens();
 
 //cors configuration
 app.use(
-  cors({
-    origin: process.env.FRONTEND_URL,
-    allowedHeaders: ["content-type", ...supertokens.getAllCORSHeaders()],
-    credentials: true,
-  })
+    cors({
+        origin: process.env.FRONTEND_URL,
+        allowedHeaders: ["content-type", ...supertokens.getAllCORSHeaders()],
+        credentials: true,
+    })
 );
 app.use(middleware());
 
@@ -49,5 +46,5 @@ app.use(errorHandler());
 //Starting App
 const port = process.env.PORT || 8000;
 app.listen(port, () => {
-  Logger.info(`App started. Listening on port ${port}`);
+    Logger.info(`App started. Listening on port ${port}`);
 });
