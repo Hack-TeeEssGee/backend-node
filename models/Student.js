@@ -10,6 +10,10 @@ exports.Student_Model = function (sequelize, DataTypes) {
             name: DataTypes.STRING,
             roll_no: DataTypes.STRING,
             email: DataTypes.STRING,
+            certificates: {
+                type: DataTypes.STRING,
+                defaultValue: "",
+            },
         },
         {
             tableName: "student",
