@@ -8,6 +8,7 @@ const {Event_Model} = require("../models/Event");
 const {OTP_Model} = require("../models/OTP");
 const {Official_Model} = require("../models/Official");
 const {Student_Model} = require("../models/Student");
+const {Certificate_Model} = require("../models/Certificate");
 
 const sequelize = new Sequelize(process.env.DATABASE_STRING, {
     logging: false,
@@ -17,9 +18,10 @@ const Event = Event_Model(sequelize, Sequelize);
 const OTP = OTP_Model(sequelize, Sequelize);
 const Official = Official_Model(sequelize, Sequelize);
 const Student = Student_Model(sequelize, Sequelize);
+const Certificate = Certificate_Model(sequelize, Sequelize);
 
 sequelize.sync().then(() => {
     Logger.info("db and tables have been created");
 });
 
-module.exports = {Event, OTP, Official, Student};
+module.exports = {Event, OTP, Official, Student, Certificate};
