@@ -9,6 +9,7 @@ exports.Certificate_Model = function (sequelize, DataTypes) {
             },
             location: DataTypes.STRING,
             fileName: DataTypes.STRING,
+            position: DataTypes.String,
         },
         {
             tableName: "certificate",
