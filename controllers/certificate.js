@@ -2,12 +2,13 @@ const {Certificate, Student} = require("../utils/connection");
 
 exports.uploadCertificate = async (req, res) => {
     try {
-        const {email, position} = req.body;
+        const {email, position, event_id} = req.body;
 
         const certificate_instance = await Certificate.create({
             location: req.file.location,
             fileName: req.file.originalname,
             position: position,
+            event: event_id,
         });
 
         const student_instance = await Student.findOne({where: {email}});
