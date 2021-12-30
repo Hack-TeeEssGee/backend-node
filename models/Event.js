@@ -7,7 +7,8 @@ exports.Event_Model = function (sequelize, DataTypes) {
                 defaultValue: DataTypes.UUIDV4,
                 primaryKey: true,
             },
-            type: DataTypes.STRING,
+            name: DataTypes.STRING,
+            fb_post_link: DataTypes.STRING,
         },
         {
             freezeTableName: true,
