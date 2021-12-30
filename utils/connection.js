@@ -14,7 +14,7 @@ const sequelize = new Sequelize(process.env.DATABASE_STRING, {
     logging: false,
 });
 
-const Event = Event_Model(sequelize, Sequelize);
+const Events = Event_Model(sequelize, Sequelize);
 const OTP = OTP_Model(sequelize, Sequelize);
 const Official = Official_Model(sequelize, Sequelize);
 const Student = Student_Model(sequelize, Sequelize);
@@ -24,4 +24,4 @@ sequelize.sync().then(() => {
     Logger.info("db and tables have been created");
 });
 
-module.exports = {Event, OTP, Official, Student, Certificate};
+module.exports = {Events, OTP, Official, Student, Certificate};
