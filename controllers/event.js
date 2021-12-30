@@ -1,10 +1,10 @@
-const {Event} = require("../utils/connection");
+const {Events} = require("../utils/connection");
 
 exports.uploadEvent = async (req, res) => {
     try {
         const {name, fb_post_link} = req.body;
 
-        const event_instance = await Event.create({
+        const event_instance = await Events.create({
             location: req.file.location,
             fb_post_link,
             name: name,
