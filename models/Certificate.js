@@ -10,6 +10,7 @@ exports.Certificate_Model = function (sequelize, DataTypes) {
             location: DataTypes.STRING,
             fileName: DataTypes.STRING,
             position: DataTypes.STRING,
+            event: DataTypes.UUID,
         },
         {
             tableName: "certificate",
