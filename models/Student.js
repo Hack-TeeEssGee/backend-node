@@ -12,7 +12,7 @@ exports.Student_Model = function (sequelize, DataTypes) {
             email: DataTypes.STRING,
             certificates: {
                 type: DataTypes.STRING,
-                defaultValue: "",
+                defaultValue: "[]",
             },
         },
         {
