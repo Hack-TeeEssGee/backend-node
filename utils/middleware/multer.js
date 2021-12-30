@@ -1,5 +1,4 @@
 const AWS = require("aws-sdk");
-const fs = require("fs");
 const multer = require("multer");
 const path = require("path");
 const multerS3 = require("multer-s3");
@@ -13,15 +12,31 @@ AWS.config.update({
 var s3 = new AWS.S3();
 
 //configuring parameters
-exports.upload = multer({
+
+//certificate upload middleware
+exports.upload_certificate = multer({
     storage: multerS3({
         s3: s3,
-        bucket: "kgpverse",
+        bucket: "kgpverse-certificates",
         metadata: function (req, file, cb) {
             cb(null, {fieldName: file.fieldname});
         },
         key: function (req, file, cb) {
             cb(null, "certificate/" + Date.now() + "_" + file.originalname);
+        },
+    }),
+});
+
+//event upload middleware
+exports.upload_event = multer({
+    storage: multerS3({
+        s3: s3,
+        bucket: "kgpverse-events",
+        metadata: function (req, file, cb) {
+            cb(null, {fieldName: file.fieldname});
+        },
+        key: function (req, file, cb) {
+            cb(null, "event/" + Date.now() + "_" + file.originalname);
         },
     }),
 });
