@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const {uploadCertificate} = require("../controllers/certificate");
-const {upload} = require("../utils/middleware/multer");
+const {upload_certificate} = require("../utils/middleware/multer");
 
-router.post("/upload", upload.single("image"), uploadCertificate);
+router.post("/upload", upload_certificate.single("image"), uploadCertificate);
 
 module.exports = router;
