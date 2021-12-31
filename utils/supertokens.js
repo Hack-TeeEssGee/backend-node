@@ -3,7 +3,6 @@ let Session = require("supertokens-node/recipe/session");
 const Logger = require("./logger");
 
 const initSupertokens = () => {
-
     supertokens.init({
         framework: "express",
         supertokens: {
@@ -15,13 +14,11 @@ const initSupertokens = () => {
             // learn more about this on https://supertokens.io/docs/session/appinfo
             appName: "kgpverse",
             apiDomain: process.env.BACKEND_URL,
-            websiteDomain: process.env.FRONTEND_URL
+            websiteDomain: process.env.FRONTEND_URL,
         },
-        recipeList: [
-            Session.init()
-        ]
+        recipeList: [Session.init()],
     });
-    Logger.info('Supertokens connected.');
-}
+    Logger.info("Supertokens connected.");
+};
 
 exports.initSupertokens = initSupertokens;
