@@ -11,6 +11,8 @@ exports.Event_Model = function (sequelize, DataTypes) {
             fb_post_link: DataTypes.STRING,
             location: DataTypes.STRING,
             category: DataTypes.STRING,
+            start_date: DataTypes.DATEONLY,
+            end_date: DataTypes.DATEONLY,
         },
         {
             freezeTableName: true,
