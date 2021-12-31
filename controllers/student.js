@@ -13,7 +13,11 @@ exports.getCertificateList = async (req, res) => {
         for (e in certificate_list) {
             const certificate_instance = await Certificate.findOne({where: {id: certificate_list[e]}});
             const event_instance = await Events.findOne({where: {id: certificate_instance.event}});
-            event_details.push({name: event_instance.name, link: event_instance.location});
+            event_details.push({
+                name: event_instance.name,
+                link: event_instance.location,
+                category: event_instance.category,
+            });
         }
 
         const response = {Status: "Success", Details: "Students Certificate details fetched", event_details};
