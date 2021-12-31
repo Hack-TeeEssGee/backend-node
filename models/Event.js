@@ -10,7 +10,7 @@ exports.Event_Model = function (sequelize, DataTypes) {
             name: DataTypes.STRING,
             fb_post_link: DataTypes.STRING,
             location: DataTypes.STRING,
-            catergory: DataTypes.STRING,
+            category: DataTypes.STRING,
         },
         {
             freezeTableName: true,
