@@ -17,3 +17,15 @@ exports.uploadEvent = async (req, res) => {
         return res.status(400).send(response);
     }
 };
+
+exports.getAllEvents = async (req, res) => {
+    try {
+        const events = await Events.findAll();
+
+        const response = {Status: "Success", Details: "All Current Events", events};
+        return res.status(200).send(response);
+    } catch (err) {
+        const response = {Status: "Failure", Details: err.message};
+        return res.status(400).send(response);
+    }
+};
