@@ -17,3 +17,6 @@ MVC structure
 `scripts`: Extra scripts (unrelated to the usual flow of the webapp)
 
 `docs`: Documentation
+
+
+- Update as of 31/12/2021 11:28 PM (Yes 30 mins before new Year) - Managed to submit round 2 , would work fast enough to get through round 3
