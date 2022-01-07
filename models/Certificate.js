@@ -7,10 +7,11 @@ exports.Certificate_Model = function (sequelize, DataTypes) {
                 defaultValue: DataTypes.UUIDV4,
                 primaryKey: true,
             },
-            location: DataTypes.STRING,
+            key: DataTypes.STRING,
             fileName: DataTypes.STRING,
             position: DataTypes.STRING,
             event: DataTypes.UUID,
+            email: DataTypes.STRING,
         },
         {
             tableName: "certificate",
