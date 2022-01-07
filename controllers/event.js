@@ -1,5 +1,4 @@
 const {Events} = require("../utils/connection");
-const moment = require("moment");
 const {Op} = require("sequelize");
 exports.uploadEvent = async (req, res) => {
     try {
