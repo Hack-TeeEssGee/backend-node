@@ -22,7 +22,7 @@ exports.uploadCertificate = async (req, res) => {
         student_instance.certificates = JSON.stringify(certificate_list);
         await student_instance.save();
 
-        res.send("Document getting uploaded");
+        res.status(200).send({Status: "Success", Details: "Document getting uploaded"});
     } catch (err) {
         const response = {Status: "Failure", Details: err.message};
         return res.status(400).send(response);
