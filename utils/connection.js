@@ -20,7 +20,7 @@ const Official = Official_Model(sequelize, Sequelize);
 const Student = Student_Model(sequelize, Sequelize);
 const Certificate = Certificate_Model(sequelize, Sequelize);
 
-sequelize.sync().then(() => {
+sequelize.sync({ alter: true }).then(() => {
     Logger.info("db and tables have been created");
 });
 
