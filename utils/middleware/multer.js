@@ -17,7 +17,7 @@ var s3 = new AWS.S3();
 exports.upload_certificate = multer({
     storage: multerS3({
         s3: s3,
-        bucket: "kgpverse-certificates",
+        bucket: process.env.CERTIFICATE_BUCKET,
         metadata: function (req, file, cb) {
             cb(null, {fieldName: file.fieldname});
         },
@@ -31,7 +31,7 @@ exports.upload_certificate = multer({
 exports.upload_event = multer({
     storage: multerS3({
         s3: s3,
-        bucket: "kgpverse-events",
+        bucket: process.env.EVENTS_BUCKET,
         metadata: function (req, file, cb) {
             cb(null, {fieldName: file.fieldname});
         },
@@ -40,3 +40,11 @@ exports.upload_event = multer({
         },
     }),
 });
+
+exports.getFileFromS3 = key => {
+    const downloadParams = {
+        Key: key,
+        Bucket: process.env.CERTIFICATE_BUCKET,
+    };
+    return s3.getObject(downloadParams).createReadStream();
+};
