@@ -38,7 +38,7 @@ exports.getTodaysEvents = async (req, res) => {
         const {date} = req.body;
         const events = await Events.findAll({
             where: {
-                [Op.or]: [{end_date: {[Op.lte]: date.substr(0, 10)}}, {start_date: {[Op.gte]: date.substr(0, 10)}}],
+                [Op.or]: [{end_date: {[Op.gte]: date.substr(0, 10)}}, {start_date: {[Op.lte]: date.substr(0, 10)}}],
             },
         });
 
