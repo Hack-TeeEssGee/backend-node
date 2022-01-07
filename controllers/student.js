@@ -8,6 +8,14 @@ exports.getCertificateList = async (req, res) => {
     try {
         const {email} = req.body;
 
+        if (!email) {
+            const response = {
+                Status: "Failure",
+                Details: "Email not provided",
+            };
+            return res.status(400).send(response);
+        }
+
         const student_instance = await Student.findOne({where: {email}});
 
         const certificate_list = JSON.parse(student_instance.certificates);
@@ -34,6 +42,22 @@ exports.getCertificateList = async (req, res) => {
 exports.getCertificate = async (req, res) => {
     try {
         const {id, email} = req.query;
+        if (!email) {
+            const response = {
+                Status: "Failure",
+                Details: "Email not provided",
+            };
+            return res.status(400).send(response);
+        }
+
+        if (!id) {
+            const response = {
+                Status: "Failure",
+                Details: "Certificate Id not provided",
+            };
+            return res.status(400).send(response);
+        }
+
         const certificate_instance = await Certificate.findOne({where: {id}});
         if (email !== certificate_instance.email) {
             const response = {Status: "Failure", Details: "Session Hijacking"};
