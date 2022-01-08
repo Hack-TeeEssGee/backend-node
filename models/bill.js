@@ -9,8 +9,9 @@ exports.Bill_Model = function (sequelize, DataTypes) {
             },
             name: DataTypes.STRING,
             key: DataTypes.STRING,
-            status: DataTypes.STRING,
-            description: DataTypes.UUID,
+            status: {type: DataTypes.STRING, defaultValue: "pending"},
+            description: DataTypes.STRING,
+            amount: DataTypes.INTEGER,
         },
         {
             tableName: "bill",
