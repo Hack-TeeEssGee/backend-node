@@ -17,7 +17,7 @@ var s3 = new AWS.S3();
 exports.upload_certificate = multer({
     storage: multerS3({
         s3: s3,
-        bucket: process.env.CERTIFICATE_BUCKET,
+        bucket: process.env.PRIVATE_BUCKET,
         metadata: function (req, file, cb) {
             cb(null, {fieldName: file.fieldname});
         },
@@ -28,10 +28,24 @@ exports.upload_certificate = multer({
 });
 
 //event upload middleware
+exports.upload_bill = multer({
+    storage: multerS3({
+        s3: s3,
+        bucket: process.env.PRIVATE_BUCKET,
+        metadata: function (req, file, cb) {
+            cb(null, {fieldName: file.fieldname});
+        },
+        key: function (req, file, cb) {
+            cb(null, "bill/" + Date.now() + "_" + file.originalname);
+        },
+    }),
+});
+
+//event upload middleware
 exports.upload_event = multer({
     storage: multerS3({
         s3: s3,
-        bucket: process.env.EVENTS_BUCKET,
+        bucket: process.env.PUBLIC_BUCKET,
         metadata: function (req, file, cb) {
             cb(null, {fieldName: file.fieldname});
         },
@@ -41,10 +55,26 @@ exports.upload_event = multer({
     }),
 });
 
+//add Society logo
+exports.upload_society_logo = multer({
+    storage: multerS3({
+        s3: s3,
+        bucket: process.env.PUBLIC_BUCKET,
+        metadata: function (req, file, cb) {
+            cb(null, {fieldName: file.fieldname});
+        },
+        key: function (req, file, cb) {
+            cb(null, "society_logo/" + Date.now() + "_" + file.originalname);
+        },
+    }),
+});
+
+
+
 exports.getFileFromS3 = key => {
     const downloadParams = {
         Key: key,
-        Bucket: process.env.CERTIFICATE_BUCKET,
+        Bucket: process.env.PRIVATE_BUCKET,
     };
     return s3.getObject(downloadParams).createReadStream();
 };
