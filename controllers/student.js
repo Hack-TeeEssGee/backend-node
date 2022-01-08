@@ -27,6 +27,7 @@ exports.getCertificateList = async (req, res) => {
             event_details.push({
                 certificate_id: certificate_list[e],
                 event_image: event_instance.location,
+                position: certificate_instance.position,
                 event_id: event_instance.id,
                 name: event_instance.name,
                 category: event_instance.category,
