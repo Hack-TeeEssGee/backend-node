@@ -26,7 +26,8 @@ exports.getCertificateList = async (req, res) => {
             const event_instance = await Events.findOne({where: {id: certificate_instance.event}});
             event_details.push({
                 certificate_id: certificate_list[e],
-                id: event_instance.id,
+                event_image: event_instance.location,
+                event_id: event_instance.id,
                 name: event_instance.name,
                 category: event_instance.category,
             });
