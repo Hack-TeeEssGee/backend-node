@@ -12,6 +12,7 @@ exports.Bill_Model = function (sequelize, DataTypes) {
             status: {type: DataTypes.STRING, defaultValue: "pending"},
             description: DataTypes.STRING,
             amount: DataTypes.INTEGER,
+            society_id: DataTypes.UUID,
         },
         {
             tableName: "bill",

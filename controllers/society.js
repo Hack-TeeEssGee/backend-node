@@ -21,7 +21,7 @@ exports.addSociety = async (req, res) => {
             description,
             logo: req.file.location,
         });
-        
+
         const response = {Status: "Success", Details: "Society Created"};
         return res.status(200).send(response);
     } catch (err) {
@@ -32,18 +32,18 @@ exports.addSociety = async (req, res) => {
 
 exports.uploadBill = async (req, res) => {
     try {
-        const {name, amount, description} = req.body;
+        const {name, amount, description, society_id} = req.body;
 
         await Bill.create({
             key: req.file.key,
             name,
             amount,
             description,
+            society_id,
         });
 
         const response = {Status: "Success", Details: "Bill Uploaded"};
         return res.status(200).send(response);
-        res.send("hello world");
     } catch (err) {
         const response = {Status: "Failure", Details: err.message};
         return res.status(400).send(response);
