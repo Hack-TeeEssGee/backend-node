@@ -9,6 +9,7 @@ exports.Society_Model = function (sequelize, DataTypes) {
             },
             name: DataTypes.STRING,
             description: DataTypes.STRING,
+            logo: DataTypes.STRING,
         },
         {
             tableName: "society",
