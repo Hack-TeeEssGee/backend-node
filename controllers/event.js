@@ -76,7 +76,7 @@ exports.getSocietyEvents = async (req, res) => {
     try {
         const {id} = req.params;
 
-        const events = await SocEvents.find({where: {society_id: id}});
+        const events = await SocEvents.findAll({where: {society_id: id}});
 
         const response = {Status: "Success", Details: "All Events of The Society", events};
         return res.status(200).send(response);

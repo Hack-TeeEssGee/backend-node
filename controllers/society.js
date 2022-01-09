@@ -54,9 +54,9 @@ exports.getBills = async (req, res) => {
     try {
         const {id} = req.params;
 
-        const bills = await Bill.find({
+        const bills = await Bill.findAll({
             where: {
-                id,
+                society_id: id,
             },
         });
 
