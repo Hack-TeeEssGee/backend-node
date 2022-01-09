@@ -21,6 +21,27 @@ exports.uploadTSGEvent = async (req, res) => {
     }
 };
 
+exports.uploadSocEvent = async (req, res) => {
+    try {
+        const {name, fb_post_link, start_date, end_date, society_id} = req.body;
+
+        await SocEvents.create({
+            location: req.file.location,
+            fb_post_link,
+            name: name,
+            start_date: start_date.substr(0, 10),
+            end_date: end_date.substr(0, 10),
+            society_id,
+        });
+
+        const response = {Status: "Success", Details: "Event Added"};
+        return res.status(200).send(response);
+    } catch (err) {
+        const response = {Status: "Failure", Details: err.message};
+        return res.status(400).send(response);
+    }
+};
+
 exports.getAllEvents = async (req, res) => {
     try {
         const events = await Events.findAll();
