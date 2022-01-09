@@ -1,6 +1,6 @@
 exports.Event_Model = function (sequelize, DataTypes) {
     return sequelize.define(
-        "event",
+        "EVENT",
         {
             id: {
                 type: DataTypes.UUID,
@@ -15,7 +15,7 @@ exports.Event_Model = function (sequelize, DataTypes) {
             end_date: DataTypes.DATEONLY,
         },
         {
-            freezeTableName: true,
+            tableName: "event",
             timestamps: false,
         }
     );
