@@ -4,7 +4,7 @@ exports.updateBill = async (req, res) => {
     try {
         const {id, status,remark} = req.body;
 
-        const bill_instance = await Bill.find({where: {id}});
+        const bill_instance = await Bill.findOne({where: {id}});
 
         bill_instance.status = status;
         bill_instance.remark = remark;
