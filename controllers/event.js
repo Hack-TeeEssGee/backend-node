@@ -1,10 +1,10 @@
-const {Events} = require("../utils/connection");
+const {Events, SocEvents} = require("../utils/connection");
 const {Op} = require("sequelize");
-exports.uploadEvent = async (req, res) => {
+exports.uploadTSGEvent = async (req, res) => {
     try {
         const {name, fb_post_link, category, start_date, end_date} = req.body;
 
-        const event_instance = await Events.create({
+        await Events.create({
             location: req.file.location,
             fb_post_link,
             name: name,
@@ -43,6 +43,20 @@ exports.getTodaysEvents = async (req, res) => {
         });
 
         const response = {Status: "Success", Details: "All Current Events", events};
+        return res.status(200).send(response);
+    } catch (err) {
+        const response = {Status: "Failure", Details: err.message};
+        return res.status(400).send(response);
+    }
+};
+
+exports.getSocietyEvents = async (req, res) => {
+    try {
+        const {id} = req.params;
+
+        const events = await SocEvents.find({where: {society_id: id}});
+
+        const response = {Status: "Success", Details: "All Events of The Society", events};
         return res.status(200).send(response);
     } catch (err) {
         const response = {Status: "Failure", Details: err.message};
