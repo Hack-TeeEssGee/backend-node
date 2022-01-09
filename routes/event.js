@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const {uploadTSGEvent, getAllEvents, getTodaysEvents, uploadSocEvent} = require("../controllers/event");
+const {uploadTSGEvent, getAllEvents, getTodaysEvents, uploadSocEvent, getSocietyEvents} = require("../controllers/event");
 const {upload_event} = require("../utils/middleware/multer");
 
 router.post("/upload/tsg", upload_event.single("image"), uploadTSGEvent);
