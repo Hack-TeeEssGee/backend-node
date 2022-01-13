@@ -5,6 +5,7 @@ const {OTP, Official, Student} = require("../utils/connection");
 const {encode, decode} = require("../utils/crypt");
 const {message, subject_mail} = require("../template/email");
 const nodemailer = require("nodemailer");
+const {user} = require("pg/lib/defaults");
 
 exports.test = (req, res) => {
     res.send("Authentication zone reached");
@@ -313,23 +314,30 @@ exports.loginOffical = async (req, res) => {
                     const response = {Status: "Failure", Details: "Bad Request"};
                     return res.status(400).send(response);
                 }
+                if (role === user_instance.role) {
+                    if (password === decoded_password) {
+                        const response = {
+                            Status: "Success",
+                            Details: "Logged In",
+                            name: user_instance.name,
+                            email: user_instance.email,
+                            role: user_instance.role,
+                        };
 
-                if (password === decoded_password) {
-                    const response = {
-                        Status: "Success",
-                        Details: "Logged In",
-                        name: user_instance.name,
-                        email: user_instance.email,
-                        role: user_instance.role,
-                    };
+                        await Session.createNewSession(res, email, {role});
 
-                    await Session.createNewSession(res, email, {role});
-
-                    res.status(200).send(response);
+                        res.status(200).send(response);
+                    } else {
+                        const response = {
+                            Status: "Failure",
+                            Details: "Incorrect Password, Please try again",
+                        };
+                        return res.status(400).send(response);
+                    }
                 } else {
                     const response = {
                         Status: "Failure",
-                        Details: "Incorrect Password, Please try again",
+                        Details: "Role for this email does not exist, Please try again",
                     };
                     return res.status(400).send(response);
                 }
