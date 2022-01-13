@@ -1,6 +1,6 @@
-exports.Event_Model = function (sequelize, DataTypes) {
+exports.SocEvent_Model = function (sequelize, DataTypes) {
     return sequelize.define(
-        "EVENT",
+        "SOCIETY-EVENT",
         {
             id: {
                 type: DataTypes.UUID,
@@ -10,12 +10,12 @@ exports.Event_Model = function (sequelize, DataTypes) {
             name: DataTypes.STRING,
             fb_post_link: DataTypes.STRING,
             location: DataTypes.STRING,
-            category: DataTypes.STRING,
             start_date: DataTypes.DATEONLY,
             end_date: DataTypes.DATEONLY,
+            society_id: DataTypes.UUID,
         },
         {
-            tableName: "event",
+            tableName: "society_event",
             timestamps: false,
         }
     );

@@ -1,3 +1,4 @@
+
 const {getCertificateList, getCertificate} = require("../controllers/student");
 
 const router = require("express").Router();

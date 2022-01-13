@@ -13,6 +13,8 @@ const authRoute = require("./routes/auth");
 const certificateRoute = require("./routes/certificate");
 const eventRoute = require("./routes/event");
 const studentRoute = require("./routes/student");
+const societyRoute = require("./routes/society");
+const adminRoute = require("./routes/admin");
 
 // SuperToken configuration
 const {initSupertokens} = require("./utils/supertokens");
@@ -43,6 +45,8 @@ app.use("/authenticate", authRoute);
 app.use("/certificate", certificateRoute);
 app.use("/event", eventRoute);
 app.use("/student", studentRoute);
+app.use("/society", societyRoute);
+app.use("/admin", adminRoute);
 
 //supertokens error handler
 app.use(errorHandler());
