@@ -5,7 +5,6 @@ const {OTP, Official, Student} = require("../utils/connection");
 const {encode, decode} = require("../utils/crypt");
 const {message, subject_mail} = require("../template/email");
 const nodemailer = require("nodemailer");
-const {user} = require("pg/lib/defaults");
 
 exports.test = (req, res) => {
     res.send("Authentication zone reached");
