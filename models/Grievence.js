@@ -12,7 +12,7 @@ exports.Grievence_Model = function (sequelize, DataTypes) {
           description: DataTypes.STRING,
           type: DataTypes.STRING,
           resolutions: DataTypes.STRING,
-          path:DataTypes.STRING,
+          key:DataTypes.STRING,
           status: {type: DataTypes.STRING, defaultValue: "Pending"},
       },
       {
