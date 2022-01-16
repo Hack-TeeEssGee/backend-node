@@ -41,6 +41,20 @@ exports.upload_bill = multer({
     }),
 });
 
+//grievnece upload middleware
+exports.upload_grievence = multer({
+    storage: multerS3({
+        s3: s3,
+        bucket: process.env.PRIVATE_BUCKET,
+        metadata: function (req, file, cb) {
+            cb(null, {fieldName: file.fieldname});
+        },
+        key: function (req, file, cb) {
+            cb(null, "grievence/" + Date.now() + "_" + file.originalname);
+        },
+    }),
+});
+
 //event upload middleware
 exports.upload_event = multer({
     storage: multerS3({

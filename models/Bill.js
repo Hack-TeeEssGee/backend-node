@@ -17,7 +17,7 @@ exports.Bill_Model = function (sequelize, DataTypes) {
         },
         {
             tableName: "bill",
-            // timestamps: false,
+            timestamps: false,
         }
     );
 };
