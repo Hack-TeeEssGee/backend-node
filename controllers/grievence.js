@@ -14,27 +14,44 @@ exports.uploadGrievence = async (req, res) => {
     }
 };
 
+exports.getSolvedGrievence = async (req, res) => {
+    try {
+        const grievences = await Grievence.findAll({where: {status: "Solved"}});
 
-exports.getSolvedGrievence=async (req,res)=>{
-    try{
-        const grievences=await Grievence.findAll({where:{state: "Solved"}});
-
-        const response = {Status: "Success", Details: "All Solved Grievence Returned", response:grievences};
+        const response = {Status: "Success", Details: "All Solved Grievence Returned", response: grievences};
         return res.status(200).send(response);
-    }catch (err) {
+    } catch (err) {
         const response = {Status: "Failure", Details: err.message};
         return res.status(400).send(response);
     }
-}
+};
 
-exports.getPendingGrievence=async (req,res)=>{
-    try{
-        const grievences=await Grievence.findAll({where:{state: "Pending"}});
+exports.getPendingGrievence = async (req, res) => {
+    try {
+        const grievences = await Grievence.findAll({where: {status: "Pending"}});
 
-        const response = {Status: "Success", Details: "All Pending Grievence Returned", response:grievences};
+        const response = {Status: "Success", Details: "All Pending Grievence Returned", response: grievences};
         return res.status(200).send(response);
-    }catch (err) {
+    } catch (err) {
         const response = {Status: "Failure", Details: err.message};
         return res.status(400).send(response);
     }
-}
+};
+
+exports.updateGrievenceStatus = async (req, res) => {
+    try {
+        const {id, status} = req.body;
+
+        const grievence_instance = await Grievence.findOne({where: {id}});
+
+        grievence_instance.status = status;
+
+        grievence_instance.save();
+
+        const response = {Status: "Success", Details: "Grievence Updated"};
+        return res.status(200).send(response);
+    } catch (err) {
+        const response = {Status: "Failure", Details: err.message};
+        return res.status(400).send(response);
+    }
+};
