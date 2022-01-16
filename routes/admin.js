@@ -5,6 +5,6 @@ const {getSolvedGrievence, getPendingGrievence, updateGrievenceStatus} = require
 router.put("/bill", updateBill);
 router.get("/solved/grievence", getSolvedGrievence);
 router.get("/pending/grievence", getPendingGrievence);
-router.put("/update/grievence", updateGrievenceStatus);
+router.put("/grievence", updateGrievenceStatus);
 
 module.exports = router;
