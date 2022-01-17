@@ -11,6 +11,6 @@ router.post("/", upload_society_logo.single("image"), addSociety);
 router.get("/bill/:id", getBills);
 
 //upload bill
-router.post("/bill/upload", upload_bill.single("bill"), uploadBill);
+router.post("/bill/upload", upload_bill.single("image"), uploadBill);
 
 module.exports = router;
