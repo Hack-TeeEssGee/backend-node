@@ -40,6 +40,7 @@ exports.uploadBill = async (req, res) => {
             amount,
             description,
             society_id,
+            fileName: req.file.originalname,
         });
 
         const response = {Status: "Success", Details: "Bill Uploaded"};
