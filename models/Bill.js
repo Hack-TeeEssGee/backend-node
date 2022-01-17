@@ -14,6 +14,7 @@ exports.Bill_Model = function (sequelize, DataTypes) {
             amount: DataTypes.INTEGER,
             society_id: DataTypes.UUID,
             remark: DataTypes.STRING,
+            fileName:DataTypes.STRING
         },
         {
             tableName: "bill",
