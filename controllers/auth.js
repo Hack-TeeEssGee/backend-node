@@ -140,12 +140,7 @@ exports.loginStudent = async (req, res) => {
                         otp_instance.save();
 
                         const sheet = new Sheet(sheetID.student_sheet);
-
                         const student_instance = await sheet.findDetailsByEmail(check);
-
-                        // const student_instance = await Student.findOne({
-                        //     where: {email: check},
-                        // });
 
                         const response = {
                             Status: "Success",
