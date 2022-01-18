@@ -1,8 +1,5 @@
-const {Student, Events, Certificate} = require("../utils/connection");
-const uuid = require("uuid");
-const AWS = require("aws-sdk");
+const {Events, Certificate} = require("../utils/connection");
 const {getFileFromS3} = require("../utils/middleware/multer");
-const {decode} = require("../utils/crypt");
 
 exports.getCertificateList = async (req, res) => {
     try {
@@ -16,16 +13,14 @@ exports.getCertificateList = async (req, res) => {
             return res.status(400).send(response);
         }
 
-        const student_instance = await Student.findOne({where: {email}});
-
-        const certificate_list = JSON.parse(student_instance.certificates);
+        const certificate_list = await Certificate.findAll({attributes: ["id"], where: {email}});
 
         let event_details = [];
         for (e in certificate_list) {
-            const certificate_instance = await Certificate.findOne({where: {id: certificate_list[e]}});
+            const certificate_instance = await Certificate.findOne({where: {id: certificate_list[e].id}});
             const event_instance = await Events.findOne({where: {id: certificate_instance.event}});
             event_details.push({
-                certificate_id: certificate_list[e],
+                certificate_id: certificate_list[e].id,
                 event_image: event_instance.location,
                 position: certificate_instance.position,
                 event_id: event_instance.id,
