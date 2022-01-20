@@ -26,24 +26,26 @@ class Sheet {
         this.sheetName = sheetName;
     }
     async findDetailsByEmail(email) {
-        const gsapi = google.sheets({version: "v4", auth: cl});
-        const opt = {
-            spreadsheetId: this.sheetId,
-            range: this.sheetName,
-        };
-        let dataObtained = await gsapi.spreadsheets.values.get(opt);
-        const rows = dataObtained.data.values;
-        for (let row of rows) {
-            if (row[2] === email) {
-                console.log(row);
-                let response = {};
-                for (const heading in rows[0]) {
-                    response[rows[0][heading]] = row[heading];
+        try {
+            const gsapi = google.sheets({version: "v4", auth: cl});
+            const opt = {
+                spreadsheetId: this.sheetId,
+                range: this.sheetName,
+            };
+            let dataObtained = await gsapi.spreadsheets.values.get(opt);
+            const rows = dataObtained.data.values;
+            for (let row of rows) {
+                if (row[2] === email) {
+                    let response = {};
+                    for (const heading in rows[0]) {
+                        response[rows[0][heading]] = row[heading];
+                    }
+                    return response;
                 }
-                return response;
             }
+        } catch (err) {
+            throw new Error("No such user found");
         }
-        throw new Error("No such user found");
     }
     async findOfficialsData() {
         const gsapi = google.sheets({version: "v4", auth: cl});
@@ -73,6 +75,29 @@ class Sheet {
             return data;
         } catch (err) {
             throw new Error(err.message);
+        }
+    }
+    async find() {
+        try {
+            const gsapi = google.sheets({version: "v4", auth: cl});
+            const opt = {
+                spreadsheetId: this.sheetId,
+                range: this.sheetName,
+            };
+            let dataObtained = await gsapi.spreadsheets.values.get(opt);
+            const rows = dataObtained.data.values;
+            const response = [];
+            for (let row_id = 1; row_id < rows.length; row_id++) {
+                let row = rows[row_id];
+                let obj = {};
+                for (const heading in rows[0]) {
+                    obj[rows[0][heading]] = row[heading];
+                }
+                response.push(obj);
+            }
+            return response;
+        } catch (err) {
+            throw new Error("No such user found");
         }
     }
 }
