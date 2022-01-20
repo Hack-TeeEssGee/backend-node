@@ -33,7 +33,12 @@ class Sheet {
         const rows = dataObtained.data.values;
         for (let row of rows) {
             if (row[2] === email) {
-                return {name: row[0], rollNo: row[1], email: row[2]};
+                console.log(row);
+                let response = {};
+                for (const heading in rows[0]) {
+                    response[rows[0][heading]] = row[heading];
+                }
+                return response;
             }
         }
         throw new Error("No such user found");
