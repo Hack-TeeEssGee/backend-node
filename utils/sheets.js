@@ -1,6 +1,7 @@
 const {google} = require("googleapis");
 
 const keys = require("../gsheets.json");
+const {OfficialImage} = require("./connection");
 
 const cl = new google.auth.JWT(keys.client_email, null, keys.private_key, [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -61,7 +62,12 @@ class Sheet {
                 for (let i = 1; i < row.length; i++) {
                     obj[rows[0][i]] = row[i];
                 }
-                console.log(obj);
+                try {
+                    const {location} = await OfficialImage.findOne({where: {email: obj.email}});
+                    obj["image"] = location;
+                } catch (err) {
+                    obj["image"] = null;
+                }
                 data[row[0]].push(obj);
             }
             return data;
