@@ -20,10 +20,31 @@ const cl = new google.auth.JWT(keys.client_email, null, keys.private_key, [
 // gsrun(sheet);
 
 class Sheet {
-    constructor(sheetId) {
+    constructor(sheetId, sheetName) {
         this.sheetId = sheetId;
+        this.sheetName = sheetName;
     }
     async findDetailsByEmail(email) {
+        const gsapi = google.sheets({version: "v4", auth: cl});
+        const opt = {
+            spreadsheetId: this.sheetId,
+            range: this.sheetName,
+        };
+        let dataObtained = await gsapi.spreadsheets.values.get(opt);
+        const rows = dataObtained.data.values;
+        for (let row of rows) {
+            if (row[2] === email) {
+                console.log(row);
+                let response = {};
+                for (const heading in rows[0]) {
+                    response[rows[0][heading]] = row[heading];
+                }
+                return response;
+            }
+        }
+        throw new Error("No such user found");
+    }
+    async find() {
         const gsapi = google.sheets({version: "v4", auth: cl});
         const opt = {
             spreadsheetId: this.sheetId,
