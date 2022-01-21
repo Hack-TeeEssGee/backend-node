@@ -141,13 +141,12 @@ exports.loginStudent = async (req, res) => {
 
                         const sheet = new Sheet(sheetID.student_sheet, "2021");
                         const student_instance = await sheet.findDetailsByEmail(check);
-
                         const response = {
                             Status: "Success",
                             Details: "OTP Matched",
-                            name: student_instance.name,
-                            email: student_instance.email,
-                            roll_no: student_instance.rollNo,
+                            name: student_instance.Name,
+                            email: student_instance.Email,
+                            roll_no: student_instance["Roll No"],
                         };
 
                         let userId = check; // get from db
