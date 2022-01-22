@@ -56,7 +56,7 @@ class Sheet {
         let dataObtained = await gsapi.spreadsheets.values.get(opt);
         const rows = dataObtained.data.values;
 
-        let data = {"Current Office Bearers": [], "TSG Staff": [], Secretary: []};
+        let data = {"Office Bearers": [], "TSG Staff": [], Secretary: []};
         try {
             for (let row_no = 1; row_no < rows.length; row_no++) {
                 let row = rows[row_no];
