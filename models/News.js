@@ -7,7 +7,7 @@ exports.News_Model = function (sequelize, DataTypes) {
                 defaultValue: DataTypes.UUIDV4,
                 primaryKey: true,
             },
-            Title: DataTypes.STRING,
+            title: DataTypes.STRING,
             uploadedBy: DataTypes.STRING,
             description: DataTypes.STRING,
             location: DataTypes.STRING,
