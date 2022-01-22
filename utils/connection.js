@@ -13,6 +13,7 @@ const {SocEvent_Model} = require("../models/societyEvent");
 const {Grievence_Model} = require("../models/Grievence");
 const {OfficialImages_Model} = require("../models/OfficialImages");
 const {Blog_Model} = require("../models/Blog");
+const {News_Model} = require("../models/News");
 
 const sequelize = new Sequelize(process.env.DATABASE_STRING, {
     logging: false,
@@ -28,9 +29,10 @@ const Bill = Bill_Model(sequelize, Sequelize);
 const Grievence = Grievence_Model(sequelize, Sequelize);
 const OfficialImage = OfficialImages_Model(sequelize, Sequelize);
 const Blog = Blog_Model(sequelize, Sequelize);
+const News = News_Model(sequelize, Sequelize);
 
 sequelize.sync({alter: true}).then(() => {
     Logger.info("db and tables have been created");
 });
 
-module.exports = {Events, OTP, Official, Certificate, Society, Bill, SocEvents, Grievence, OfficialImage, Blog};
+module.exports = {Events, OTP, Official, Certificate, Society, Bill, SocEvents, Grievence, OfficialImage, Blog, News};
