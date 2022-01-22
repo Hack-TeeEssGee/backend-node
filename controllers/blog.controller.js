@@ -1,4 +1,3 @@
-const {report} = require("../routes/info");
 const {message, subject_mail} = require("../template/report_mail");
 const {Blog} = require("../utils/connection");
 const nodemailer = require("nodemailer");
