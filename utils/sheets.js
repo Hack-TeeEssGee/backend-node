@@ -62,7 +62,8 @@ class Sheet {
                 let row = rows[row_no];
                 let obj = {};
                 for (let i = 1; i < row.length; i++) {
-                    obj[rows[0][i]] = row[i];
+                    if (row[i] != "") obj[rows[0][i]] = row[i];
+                    else obj[rows[0][i]] = null;
                 }
                 try {
                     const {location} = await OfficialImage.findOne({where: {email: obj.email}});
