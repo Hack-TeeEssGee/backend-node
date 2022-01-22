@@ -98,6 +98,19 @@ exports.upload_tsg_image = multer({
     }),
 });
 
+exports.upload_news_image = multer({
+    storage: multerS3({
+        s3: s3,
+        bucket: process.env.PUBLIC_BUCKET,
+        metadata: function (req, file, cb) {
+            cb(null, {fieldName: file.fieldname});
+        },
+        key: function (req, file, cb) {
+            cb(null, "news/" + file.originalname);
+        },
+    }),
+});
+
 exports.getFileFromS3 = key => {
     const downloadParams = {
         Key: key,
