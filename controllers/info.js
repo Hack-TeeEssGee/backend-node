@@ -12,3 +12,31 @@ exports.getHallInfo = async (req, res) => {
         return res.status(400).send(response);
     }
 };
+
+exports.getGCEvents = async (req, res) => {
+    try {
+        const sports_sheet = new Sheet(sheetID.student_sheet, "Sports");
+        const sports_data = await sports_sheet.find();
+
+        const socult_sheet = new Sheet(sheetID.student_sheet, "Socult");
+        const socult_data = await socult_sheet.find();
+        const response = {Status: "Success", Details: "All GC events Loaded", data: {sports_data, socult_data}};
+        return res.status(200).send(response);
+    } catch (err) {
+        const response = {Status: "Failure", Details: err.message};
+        return res.status(400).send(response);
+    }
+};
+
+
+exports.getInterIITEvents = async (req, res) => {
+    try {
+        const sheet = new Sheet(sheetID.student_sheet, "InterIIT");
+        const data = await sheet.findInterIITData();
+        const response = {Status: "Success", Details: "All GC events Loaded", data};
+        return res.status(200).send(response);
+    } catch (err) {
+        const response = {Status: "Failure", Details: err.message};
+        return res.status(400).send(response);
+    }
+};
