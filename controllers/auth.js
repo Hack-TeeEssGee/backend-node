@@ -67,7 +67,7 @@ exports.sendOTP = async (req, res) => {
 
         await transporter.verify();
 
-        await transporter.sendMail(mailOptions, (err, response) => {
+        transporter.sendMail(mailOptions, (err, response) => {
             if (err) {
                 return res.status(400).send({Status: "Failure", Details: err});
             } else {
