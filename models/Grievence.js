@@ -8,7 +8,7 @@ exports.Grievence_Model = function (sequelize, DataTypes) {
               primaryKey: true,
           },
           name: DataTypes.STRING,
-          student_id: DataTypes.UUID,
+          student_email: DataTypes.STRING,
           description: DataTypes.STRING,
           type: DataTypes.STRING,
           resolutions: DataTypes.STRING,
