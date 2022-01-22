@@ -77,6 +77,30 @@ class Sheet {
             throw new Error(err.message);
         }
     }
+    async findInterIITData() {
+        const gsapi = google.sheets({version: "v4", auth: cl});
+        const opt = {
+            spreadsheetId: this.sheetId,
+            range: this.sheetName,
+        };
+        let dataObtained = await gsapi.spreadsheets.values.get(opt);
+        const rows = dataObtained.data.values;
+
+        let data = {"2021-2020": [], "2020-2019": []};
+        try {
+            for (let row_no = 1; row_no < rows.length; row_no++) {
+                let row = rows[row_no];
+                let obj = {};
+                for (let i = 1; i < row.length; i++) {
+                    obj[rows[0][i]] = row[i];
+                }
+                data[row[0]].push(obj);
+            }
+            return data;
+        } catch (err) {
+            throw new Error(err.message);
+        }
+    }
     async find() {
         try {
             const gsapi = google.sheets({version: "v4", auth: cl});
