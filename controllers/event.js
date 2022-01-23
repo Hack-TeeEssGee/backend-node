@@ -14,6 +14,8 @@ exports.uploadTSGEvent = async (req, res) => {
             end_date: end_date.substr(0, 10),
         });
 
+        await createNotif("New Event", "Login To Portal to see Event");
+
         const response = {Status: "Success", Details: "Event Created"};
         return res.status(200).send(response);
     } catch (err) {
@@ -35,7 +37,7 @@ exports.uploadSocEvent = async (req, res) => {
             society_id,
         });
 
-        await createNotif("Event Created", "Login To Portal to see Event");
+        await createNotif("New Event", "Login To Portal to see Event");
 
         const response = {Status: "Success", Details: "Event Added"};
         return res.status(200).send(response);

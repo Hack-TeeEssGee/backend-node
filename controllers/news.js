@@ -16,7 +16,9 @@ exports.uploadNews = async (req, res) => {
         const {title, description, uploadedBy} = req.body;
         const file = req.file;
         await News.create({title, uploadedBy, description, location: file.location});
-        
+
+        await createNotif("New News", "Login To Portal to see News");
+
         const response = {Status: "Success", Details: "News Added"};
         return res.status(200).send(response);
     } catch (err) {

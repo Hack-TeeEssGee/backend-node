@@ -19,6 +19,8 @@ exports.addBlog = async (req, res) => {
         const {name, email, title, body} = req.body;
         await Blog.create({name, email, title, body});
 
+        await createNotif("New Blog", "New Blog has been added, do check it out ");
+
         const response = {Status: "Success", Details: "Blog Added"};
         return res.status(200).send(response);
     } catch (err) {
