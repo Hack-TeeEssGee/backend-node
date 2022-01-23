@@ -65,12 +65,12 @@ class Sheet {
                     if (row[i] != "") obj[rows[0][i]] = row[i];
                     else obj[rows[0][i]] = null;
                 }
-                try {
-                    const {location} = await OfficialImage.findOne({where: {email: obj.email}});
-                    obj["image"] = location;
-                } catch (err) {
-                    obj["image"] = null;
-                }
+                // try {
+                //     const {location} = await OfficialImage.findOne({where: {email: obj.email}});
+                //     obj["image"] = location;
+                // } catch (err) {
+                //     obj["image"] = null;
+                // }
                 data[row[0]].push(obj);
             }
             return data;

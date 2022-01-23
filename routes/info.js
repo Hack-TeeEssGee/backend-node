@@ -21,7 +21,7 @@ router.get("/academic-point", getAcademicPoint);
 router.get("/blog", getAllBlogs);
 router.post("/blog", addBlog);
 router.post("/blog/report", reportBlog);
-router.delete("/blog", deleteBlog);
+router.post("/blog/delete", deleteBlog);
 
 module.exports = router;
 
