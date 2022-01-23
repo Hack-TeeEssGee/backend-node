@@ -3,9 +3,9 @@ const {Op} = require("sequelize");
 
 exports.uploadGrievence = async (req, res) => {
     try {
-        const {id, name, description, type, resolutions} = req.body;
+        const {email, name, description, type, resolutions} = req.body;
 
-        await Grievence.create({name, student_id: id, description, type, resolutions, key: req.file.key});
+        await Grievence.create({name, student_email: email, description, type, resolutions, key: req.file.key});
 
         res.status(200).send({Status: "Success", Details: "Grievence recorded"});
     } catch (err) {

@@ -1,6 +1,6 @@
-exports.Student_Model = function (sequelize, DataTypes) {
+exports.Blog_Model = function (sequelize, DataTypes) {
     return sequelize.define(
-        "Student",
+        "BLOG",
         {
             id: {
                 type: DataTypes.UUID,
@@ -8,16 +8,15 @@ exports.Student_Model = function (sequelize, DataTypes) {
                 primaryKey: true,
             },
             name: DataTypes.STRING,
-            roll_no: DataTypes.STRING,
             email: DataTypes.STRING,
-            certificates: {
-                type: DataTypes.STRING,
-                defaultValue: "[]",
-            },
+            title: DataTypes.STRING,
+            body: DataTypes.STRING,
+            reports: {type: DataTypes.STRING, defaultValue: '[]'},
         },
         {
-            tableName: "student",
-            timestamps: false,
+            tableName: "blog",
+            timestamps: true,
+            updatedAt: false,
         }
     );
 };

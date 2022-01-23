@@ -1,10 +1,10 @@
-const {Certificate, Student} = require("../utils/connection");
+const {Certificate, OtherCertificate} = require("../utils/connection");
 
 exports.uploadCertificate = async (req, res) => {
     try {
         const {email, position, event_id} = req.body;
         console.log(req.file);
-        const certificate_instance = await Certificate.create({
+        await Certificate.create({
             key: req.file.key,
             fileName: req.file.originalname,
             position: position,
@@ -12,16 +12,25 @@ exports.uploadCertificate = async (req, res) => {
             email,
         });
 
-        const student_instance = await Student.findOne({where: {email}});
+        res.status(200).send({Status: "Success", Details: "Document uploaded"});
+    } catch (err) {
+        const response = {Status: "Failure", Details: err.message};
+        return res.status(400).send(response);
+    }
+};
 
-        // USING TEMP WALTHROUGH UNTIL THIS ISSUE GETS FIXED https://github.com/sequelize/sequelize/issues/13833
-        // student_instance.certificates.push(certificate_instance.id);
-        // await student_instance.save();
-
-        const certificate_list = JSON.parse(student_instance.certificates);
-        certificate_list.push(certificate_instance.id);
-        student_instance.certificates = JSON.stringify(certificate_list);
-        await student_instance.save();
+exports.uploadIndividualCertificate = async (req, res) => {
+    try {
+        const {name, email, position} = req.body;
+        await OtherCertificate.create({
+            key: req.file.key,
+            fileName: req.file.originalname,
+            position: position,
+            email,
+            event_name: name,
+            event_image:
+                "https://kgpverse-events.s3.ap-south-1.amazonaws.com/event/Ecological+press+conference+member+speaking+on+stage.jpg",
+        });
 
         res.status(200).send({Status: "Success", Details: "Document uploaded"});
     } catch (err) {

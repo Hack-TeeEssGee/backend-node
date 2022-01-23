@@ -1,10 +1,12 @@
 let Session = require("supertokens-node/recipe/session");
 var otpGenerator = require("otp-generator");
 const {AddMinutes, dates, isPresent} = require("../utils/utility");
-const {OTP, Official, Student} = require("../utils/connection");
+const {OTP, Official} = require("../utils/connection");
 const {encode, decode} = require("../utils/crypt");
 const {message, subject_mail} = require("../template/email");
 const nodemailer = require("nodemailer");
+const {sheetID} = require("../utils/constants");
+const {Sheet} = require("../utils/sheets");
 
 exports.test = (req, res) => {
     res.send("Authentication zone reached");
@@ -65,7 +67,7 @@ exports.sendOTP = async (req, res) => {
 
         await transporter.verify();
 
-        await transporter.sendMail(mailOptions, (err, response) => {
+        transporter.sendMail(mailOptions, (err, response) => {
             if (err) {
                 return res.status(400).send({Status: "Failure", Details: err});
             } else {
@@ -137,17 +139,14 @@ exports.loginStudent = async (req, res) => {
                         otp_instance.verified = true;
                         otp_instance.save();
 
-                        const student_instance = await Student.findOne({
-                            where: {email: check},
-                        });
-
+                        const sheet = new Sheet(sheetID.student_sheet, "2021");
+                        const student_instance = await sheet.findDetailsByEmail(check);
                         const response = {
                             Status: "Success",
                             Details: "OTP Matched",
-                            Check: check,
-                            name: student_instance.name,
-                            email: student_instance.email,
-                            roll_no: student_instance.roll_no,
+                            name: student_instance.Name,
+                            email: student_instance.Email,
+                            roll_no: student_instance["Roll No"],
                         };
 
                         let userId = check; // get from db
