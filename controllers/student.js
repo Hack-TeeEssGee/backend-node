@@ -1,4 +1,4 @@
-const {Events, Certificate} = require("../utils/connection");
+const {Events, Certificate, OtherCertificate} = require("../utils/connection");
 const {getFileFromS3} = require("../utils/middleware/multer");
 
 exports.getCertificateList = async (req, res) => {
@@ -29,10 +29,12 @@ exports.getCertificateList = async (req, res) => {
             });
         }
 
+        const other_certificates = await OtherCertificate.findAll({where: {email}});
+
         const response = {
             Status: "Success",
             Details: "Students Certificate details fetched",
-            certificate_list: event_details,
+            certificate_list: [...event_details, ...other_certificates],
         };
         return res.status(200).send(response);
     } catch (err) {
