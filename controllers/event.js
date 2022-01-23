@@ -1,5 +1,6 @@
 const {Events, SocEvents} = require("../utils/connection");
 const {Op} = require("sequelize");
+const {createNotif} = require("../utils/notifs");
 exports.uploadTSGEvent = async (req, res) => {
     try {
         const {name, fb_post_link, category, start_date, end_date} = req.body;
@@ -12,6 +13,8 @@ exports.uploadTSGEvent = async (req, res) => {
             start_date: start_date.substr(0, 10),
             end_date: end_date.substr(0, 10),
         });
+
+        await createNotif("New Event", "Login To Portal to see Event");
 
         const response = {Status: "Success", Details: "Event Created"};
         return res.status(200).send(response);
@@ -33,6 +36,8 @@ exports.uploadSocEvent = async (req, res) => {
             end_date: end_date.substr(0, 10),
             society_id,
         });
+
+        await createNotif("New Event", "Login To Portal to see Event");
 
         const response = {Status: "Success", Details: "Event Added"};
         return res.status(200).send(response);

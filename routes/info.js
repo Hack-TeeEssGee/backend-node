@@ -24,3 +24,5 @@ router.post("/blog/report", reportBlog);
 router.delete("/blog", deleteBlog);
 
 module.exports = router;
+
+
