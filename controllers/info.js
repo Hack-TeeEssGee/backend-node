@@ -57,7 +57,43 @@ exports.getCDCData = async (req, res) => {
         const {week_no} = req.query;
         const sheet = new Sheet(sheetID.student_sheet, `CDC Week-${week_no}`);
         const data = await sheet.find();
-        const response = {Status: "Success", Details: "All Professor Loaded", data};
+        const response = {Status: "Success", Details: "All CDC Loaded", data};
+        return res.status(200).send(response);
+    } catch (err) {
+        const response = {Status: "Failure", Details: err.message};
+        return res.status(400).send(response);
+    }
+};
+
+exports.getCareerPoint = async (req, res) => {
+    try {
+        const sheet = new Sheet(sheetID.student_sheet, `Career Point`);
+        const data = await sheet.find();
+        const response = {Status: "Success", Details: "All Career Point Data Loaded", data};
+        return res.status(200).send(response);
+    } catch (err) {
+        const response = {Status: "Failure", Details: err.message};
+        return res.status(400).send(response);
+    }
+};
+
+exports.getCareerPoint = async (req, res) => {
+    try {
+        const sheet = new Sheet(sheetID.student_sheet, `Career Point`);
+        const data = await sheet.find();
+        const response = {Status: "Success", Details: "All Career Point Data Loaded", data};
+        return res.status(200).send(response);
+    } catch (err) {
+        const response = {Status: "Failure", Details: err.message};
+        return res.status(400).send(response);
+    }
+};
+
+exports.getAcademicPoint = async (req, res) => {
+    try {
+        const sheet = new Sheet(sheetID.student_sheet, `Academic Point`);
+        const data = await sheet.find();
+        const response = {Status: "Success", Details: "All Academic Point Data Loaded", data};
         return res.status(200).send(response);
     } catch (err) {
         const response = {Status: "Failure", Details: err.message};
